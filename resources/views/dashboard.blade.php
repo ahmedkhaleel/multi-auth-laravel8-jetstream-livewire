@@ -6,6 +6,6 @@
     </x-slot>
 
     <div class="py-12">
-        hi mahmed
+        hi{{Auth::user()->name}}
     </div>
 </x-app-layout>
