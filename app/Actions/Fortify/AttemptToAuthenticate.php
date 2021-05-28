@@ -2,7 +2,6 @@
 
 namespace App\Actions\Fortify;
 
-use Illuminate\Auth\Events\Failed;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Fortify;
@@ -72,8 +71,6 @@ class AttemptToAuthenticate
         $user = call_user_func(Fortify::$authenticateUsingCallback, $request);
 
         if (! $user) {
-            $this->fireFailedEvent($request);
-
             return $this->throwFailedAuthenticationException($request);
         }
 
@@ -97,19 +94,5 @@ class AttemptToAuthenticate
         throw ValidationException::withMessages([
             Fortify::username() => [trans('auth.failed')],
         ]);
-    }
-
-    /**
-     * Fire the failed authentication attempt event with the given arguments.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     */
-    protected function fireFailedEvent($request)
-    {
-        event(new Failed(config('fortify.guard'), null, [
-            Fortify::username() => $request->{Fortify::username()},
-            'password' => $request->password,
-        ]));
     }
 }

@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\Admin;
-use App\Models\User;
-
 return [
 
     /*
@@ -75,11 +72,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => User::class,
+            'model' => App\Models\User::class,
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => Admin::class,
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
@@ -110,7 +107,6 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-
         'admins' => [
             'provider' => 'admins',
             'table' => 'password_resets',
